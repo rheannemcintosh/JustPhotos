@@ -1,18 +1,20 @@
 <template>
     <div>
-        <form enctype="multipart/form-date">
+        <form @submit.prevent="createAlbum" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Name of Album</label>
-                <input type="text" name="name" class="form-control" maxLength="15">
+                <input type="text" name="name" v-model="name" class="form-control" maxLength="15">
             </div>
             <div class="form-group">
                 <label>Album Description</label>
-                <textarea name="description" class="form-control" maxLength="200"></textarea>
+                <textarea name="description" class="form-control" v-model="description" maxLength="200"></textarea>
             </div>
             <div class="form-group">
                 <label>Album Category</label>
-                <select class="form-control">
-                    <option></option>
+                <select class="form-control" name="category" v-model="category">
+                    <option v-for="(category,index) in categories" :key="index" :value="category.id">
+                        {{category.name}}
+                    </option>
                 </select>
             </div>
             <div class="form-group">
@@ -25,3 +27,30 @@
         </form>
     </div>
 </template>
+<script type="text/javascript">
+    export default{
+        data(){
+            return{
+                name:'',
+                description:'',
+                category:'',
+                image:'',
+                categories:[]
+            }
+        },
+        created() {
+            this.getCategories()
+        },
+        methods: {
+            getCategories(){
+                axios.get('/api/categories').then((response)=>{
+                    this.categories = response.data
+                }).catch((error)=>{
+                    alert('unable to fetch categories')
+                })
+            },
+            createAlbum(){
+            }
+        }
+    }
+</script>
