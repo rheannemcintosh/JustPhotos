@@ -4,10 +4,16 @@
             <div class="form-group">
                 <label>Name of Album</label>
                 <input type="text" name="name" v-model="name" class="form-control" maxLength="15">
+                <span v-if="allerrors.name" :class="['danger']">
+                    {{allerrors.name[0]}}
+                </span>
             </div>
             <div class="form-group">
                 <label>Album Description</label>
                 <textarea name="description" class="form-control" v-model="description" maxLength="200"></textarea>
+                <span v-if="allerrors.description" :class="['danger']">
+                    {{allerrors.description[0]}}
+                </span>
             </div>
             <div class="form-group">
                 <label>Album Category</label>
@@ -15,11 +21,17 @@
                     <option v-for="(category,index) in categories" :key="index" :value="category.id">
                         {{category.name}}
                     </option>
+                    <span v-if="allerrors.category" :class="['danger']">
+                        {{allerrors.category[0]}}
+                    </span>
                 </select>
             </div>
             <div class="form-group">
                 <label>Album Cover</label>
                 <input type="file" name="image" class="form-control" v-on:change="onImageChange">
+                <span v-if="allerrors.image" :class="['danger']">
+                    {{allerrors.image[0]}}
+                </span>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-secondary">Create Album</button>
@@ -27,7 +39,6 @@
         </form>
         <div v-if="success">
             <a :href="'gallery/'+albumId">Your album is created. Plrase click he link to upload the images.</a>
-
         </div>
     </div>
 </template>
@@ -41,7 +52,8 @@
                 image:'',
                 categories:[],
                 id:'',
-                success:false
+                success:false,
+                allerrors:[]
             }
         },
         created() {
@@ -79,8 +91,14 @@
                         this.success=true
                     }).catch((error)=>{
                         console.log(error)
+                        this.allerrors=error.response.data.errors
                     })
             }
         }
     }
 </script>
+<style type="text/css">
+    .danger{
+        color:red;
+    }
+</style>
