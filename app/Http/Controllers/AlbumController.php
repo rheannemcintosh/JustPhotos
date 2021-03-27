@@ -27,13 +27,15 @@ class AlbumController extends Controller
     public function store(Request $request){
 
         $this->validate($request, [
-            'name' => 'required|min:3|max:15',
-            'descriiption' => 'required|min:3|max:200',
-            'category_id' => 'required',
-            'image' => 'required|mimes:jpeg,jpg,png',
+            'name'        =>'required|min:3|max:15',
+            'description' =>'required|min:3|max:200',
+            'category_id' =>'required',
+            'image'       =>'required|mimes:jpeg,jpg,png'
         ]);
+
         $imageName = $request->image->hashName();
         $request->image->move(public_path('album'), $imageName);
+      
         $album = Album::create([
             'name'        => $request->name,
             'description' => $request->description,
