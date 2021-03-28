@@ -48,4 +48,8 @@ class AlbumController extends Controller
         $id = $album->id;
         return response()->json(['id' => $id]);
     }
+
+    public function getOneAlbum($id) {
+        return ALbum::with('category')->find($id);
+    }
 }
