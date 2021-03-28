@@ -26,3 +26,5 @@ Route::post('/albums/store', [AlbumController::class, 'store']);
 
 Route::get('/albums', [AlbumController::class, 'index'])->middleware('auth');
 Route::get('/getalbums', [AlbumController::class, 'getAlbums'])->middleware('auth');
+
+Route::get('/albums/{id}', [AlbumController::class, 'getOneAlbum']);
