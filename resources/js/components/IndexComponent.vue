@@ -21,10 +21,16 @@
                     <td>{{album.name}}</td>
                     <td>{{album.description}}</td>
                     <td>{{album.category.name}}</td>
+                    <td>
+                        <button @click.prevent="edit(album.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+
+                        </button>
+                    </td>                
                 </tr>
             </tbody>
 
         </table>
+        <edit></edit>
     </div>
 </template>
 
@@ -41,6 +47,10 @@
             }).catch((error)=>{
                 consol.log(error)
             })                
+        },
+        methods:{
+            edit(id) {
+            }
         }
     }
 </script>
