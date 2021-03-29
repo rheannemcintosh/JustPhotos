@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(album, index) in albums">
+                <tr v-for="(album, index) in albums" :key="album.id">
                     <th scope="row">
                         {{index+1}}
                     </th>
