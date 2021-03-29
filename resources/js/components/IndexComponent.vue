@@ -22,15 +22,15 @@
                     <td>{{album.description}}</td>
                     <td>{{album.category.name}}</td>
                     <td>
-                        <button @click.prevent="edit(album.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
-
+                        <button @click.prevent="edit(album.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Edit
                         </button>
                     </td>                
                 </tr>
             </tbody>
 
         </table>
-        <edit></edit>
+        <edit :editrecord="records"></edit>
     </div>
 </template>
 
@@ -38,19 +38,25 @@
     export default {
         data(){
             return {
-                albums: []
+                albums: [],
+                records: []
             }
         },
         created() {
             axios.get('/getalbums').then((response)=>{
                 this.albums = response.data
             }).catch((error)=>{
-                consol.log(error)
+                console.log(error)
             })                
         },
         methods:{
-            edit(id) {
-            }
+            edit(id){
+				axios.get('/api/albums/'+id).then((response)=>{
+					this.records = response.data
+				}).catch((error)=>{
+					alert('unable to to fetch data')
+				})
+			}
         }
     }
 </script>
