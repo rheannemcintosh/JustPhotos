@@ -2016,13 +2016,18 @@ __webpack_require__.r(__webpack_exports__);
   props: ['editrecord'],
   data: function data() {
     return {
-      categories: []
+      categories: [],
+      image: ''
     };
   },
   created: function created() {
     this.getCategories();
   },
   methods: {
+    onImageChange: function onImageChange(e) {
+      console.log(e);
+      this.image = e.target.files[0];
+    },
     getCategories: function getCategories() {
       var _this = this;
 
@@ -2030,6 +2035,28 @@ __webpack_require__.r(__webpack_exports__);
         _this.categories = response.data;
       })["catch"](function (error) {
         alert('unable to fetch categories');
+      });
+    },
+    updateAlbum: function updateAlbum() {
+      var _this2 = this;
+
+      var config = {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      var formData = new FormData();
+      formData.append('image', this.image);
+      formData.append('name', this.editrecord.name);
+      formData.append('description', this.editrecord.description);
+      formData.append('category_id', this.editrecord.category_id);
+      formData.append("_method", "put");
+      axios.post('/albums/' + this.editrecord.id + '/edit', formData, config).then(function (response) {
+        $('#exampleModal').modal('hide');
+
+        _this2.$emit('recordUpdated', response);
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -2144,6 +2171,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         alert('unable to to fetch data');
       });
+    },
+    recordUpdate: function recordUpdate(response) {
+      this.albums = response.data;
     }
   }
 });
@@ -38586,129 +38616,153 @@ var render = function() {
               _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
-                _c("form", { attrs: { enctype: "multipart/form-data" } }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Name of Album")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.editrecord.name,
-                          expression: "editrecord.name"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        name: "name",
-                        maxlength: "15",
-                        required: ""
-                      },
-                      domProps: { value: _vm.editrecord.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.editrecord, "name", $event.target.value)
-                        }
+                _c(
+                  "form",
+                  {
+                    attrs: { enctype: "multipart/form-data" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateAlbum($event)
                       }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Description of Album")]),
-                    _vm._v(" "),
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.editrecord.description,
-                          expression: "editrecord.description"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        maxlength: "200",
-                        name: "description",
-                        required: ""
-                      },
-                      domProps: { value: _vm.editrecord.description },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.editrecord,
-                            "description",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Category of Album")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Name of Album")]),
+                      _vm._v(" "),
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.editrecord.category_id,
-                            expression: "editrecord.category_id"
+                            value: _vm.editrecord.name,
+                            expression: "editrecord.name"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { name: "category" },
+                        attrs: {
+                          type: "text",
+                          name: "name",
+                          maxlength: "15",
+                          required: ""
+                        },
+                        domProps: { value: _vm.editrecord.name },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
                             _vm.$set(
                               _vm.editrecord,
-                              "category_id",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                              "name",
+                              $event.target.value
                             )
                           }
                         }
-                      },
-                      _vm._l(_vm.categories, function(category, index) {
-                        return _c(
-                          "option",
-                          { key: index, domProps: { value: category.id } },
-                          [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(category.name) +
-                                "\n                    "
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Description of Album")]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editrecord.description,
+                            expression: "editrecord.description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          maxlength: "200",
+                          name: "description",
+                          required: ""
+                        },
+                        domProps: { value: _vm.editrecord.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.editrecord,
+                              "description",
+                              $event.target.value
                             )
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _vm._m(2)
-                ])
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Category of Album")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.editrecord.category_id,
+                              expression: "editrecord.category_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { name: "category" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.editrecord,
+                                "category_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.categories, function(category, index) {
+                          return _c(
+                            "option",
+                            { key: index, domProps: { value: category.id } },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(category.name) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Image of Album")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: { type: "file", name: "image" },
+                        on: { change: _vm.onImageChange }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ]
+                )
               ])
             ])
           ]
@@ -38741,19 +38795,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Image of Album")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "file", name: "image" }
-      })
     ])
   },
   function() {
@@ -38900,7 +38941,10 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("edit", { attrs: { editrecord: _vm.records } })
+      _c("edit", {
+        attrs: { editrecord: _vm.records },
+        on: { recordUpdated: _vm.recordUpdate }
+      })
     ],
     1
   )

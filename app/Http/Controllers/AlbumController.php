@@ -52,4 +52,25 @@ class AlbumController extends Controller
     public function getOneAlbum($id) {
         return ALbum::with('category')->find($id);
     }
+
+    public function update($id, Request $request) {
+        $album     = Album::find($id);
+        $photo     = $album->image;
+
+        if ($request->hasFile('image')) {
+            $file  = $request->file('image');
+            $photo = $file->hashName();
+            $file->move('./album/', $photo);
+        }
+
+        $album->name        = $request->name;
+        $album->description = $request->description;
+        $album->category_id = $request->category_id;
+        $album->image       = $photo;
+        $success            = $album->save();
+
+        if ($success) {
+            return response()->json($this->getAlbums());
+        }
+    }
 }
