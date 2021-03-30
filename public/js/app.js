@@ -2055,6 +2055,14 @@ __webpack_require__.r(__webpack_exports__);
         $('#exampleModal').modal('hide');
 
         _this2.$emit('recordUpdated', response);
+
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Your album has been updated',
+          showConfirmButton: false,
+          timer: 1500
+        });
       })["catch"](function (error) {
         console.log(error);
       });

@@ -96,6 +96,13 @@
 					formData, config).then((response)=>{
 						$('#exampleModal').modal('hide');
 						this.$emit('recordUpdated', response)
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: 'Your album has been updated',
+							showConfirmButton: false,
+							timer: 1500
+						})
 					}).catch((error)=>{
 						console.log(error)
 					})
