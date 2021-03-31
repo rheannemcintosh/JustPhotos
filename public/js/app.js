@@ -2154,6 +2154,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2182,6 +2187,34 @@ __webpack_require__.r(__webpack_exports__);
     },
     recordUpdate: function recordUpdate(response) {
       this.albums = response.data;
+    },
+    deleteRecord: function deleteRecord(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]('/albums/' + id + '/delete').then(function (response) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your album has been deleted',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            _this3.albums = response.data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
     }
   }
 });
@@ -38939,6 +38972,27 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                        Edit\n                    "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.deleteRecord(album.id)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Delete\n                    "
                     )
                   ]
                 )
