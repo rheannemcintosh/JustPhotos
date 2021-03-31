@@ -25,7 +25,12 @@
                         <button @click.prevent="edit(album.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             Edit
                         </button>
-                    </td>                
+                    </td>
+                    <td>
+                        <button @click.prevent="deleteRecord(album.id)" type="button" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </td>               
                 </tr>
             </tbody>
 
@@ -59,6 +64,32 @@
 			},
             recordUpdate(response){
                 this.albums = response.data
+            },
+            deleteRecord(id){
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Are you sure?',
+                    text: 'You won\'t be able to revert this!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result)=>{
+                    if(result.value){
+                        axios.delete('/albums/'+id+'/delete').then((response)=>{
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Your album has been deleted',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            this.albums = response.data
+                        }).catch((error)=>{
+                            console.log(error)
+                        })
+                    }
+                })
             }
         }
     }
