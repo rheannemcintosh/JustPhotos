@@ -12,6 +12,11 @@ class GalleryController extends Controller
     }
 
     public function upload(Request $request){
+        $this->validate($request, [
+            'files' => 'required',
+            'files.*' => 'mimes:png, jpeg, jpg'
+        ]);
+
         foreach ($request->file('files') as $file) {
             $name = $file->hashName();
             $file->move(public_path().'/images/',$name);
