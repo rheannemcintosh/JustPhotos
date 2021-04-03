@@ -2159,6 +2159,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2246,9 +2254,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['album_id'],
   data: function data() {
     return {
-      album_id: 1,
       uploadPercentage: '',
       uploading: false
     };
@@ -38721,7 +38729,7 @@ var render = function() {
     _vm._v(" "),
     _vm.success
       ? _c("div", [
-          _c("a", { attrs: { href: "gallery/" + _vm.albumId } }, [
+          _c("a", { attrs: { href: "upload/images/" + _vm.albumId } }, [
             _vm._v(
               "Your album is created. Plrase click he link to upload the images."
             )
@@ -39084,6 +39092,14 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(album.category.name))]),
               _vm._v(" "),
               _c("td", [
+                _c("a", { attrs: { href: "upload/images/" + album.id } }, [
+                  _c("button", { staticClass: "btn btn-success" }, [
+                    _vm._v("Upload")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", [
                 _c(
                   "button",
                   {
@@ -39157,7 +39173,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Description")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Category")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Category")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Upload")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Edit")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Delete")])
       ])
     ])
   }
