@@ -2313,6 +2313,36 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         alert('error');
       });
+    },
+    DeleteImage: function DeleteImage(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]('/image/' + id).then(function (response) {
+            _this3.getImage();
+
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your album has been deleted',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            _this3.albums = response.data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
     }
   }
 });
@@ -39293,11 +39323,23 @@ var render = function() {
                   attrs: { src: "/images/" + image.image }
                 }),
                 _vm._v(" "),
-                _c("button", { staticClass: "btn btn-danger btn-small" }, [
-                  _vm._v(
-                    "\n                        Delete\n                    "
-                  )
-                ])
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-small",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.DeleteImage(image.id)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Delete\n                    "
+                    )
+                  ]
+                )
               ])
             ]
           )
