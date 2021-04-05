@@ -8,6 +8,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Category</th>
+                    <th scope="col">View</th>
                     <th scope="col">Upload</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
@@ -24,6 +25,13 @@
                     <td>{{album.name}}</td>
                     <td>{{album.description}}</td>
                     <td>{{album.category.name}}</td>
+                    <td>
+                        <a :href="'/albums/'+album.slug+'/'+album.id">
+                            <button class="btn btn-info">
+                                View
+                            </button>
+                        </a>
+                    </td>
                     <td>
                         <a :href="'upload/images/'+album.id">
                             <button class="btn btn-success">Upload</button>

@@ -35,3 +35,4 @@ Route::get('/upload/images/{id}', [GalleryController::class, 'create'])->middlew
 Route::post('/uploadImage', [GalleryController::class, 'upload'])->middleware('auth');
 
 Route::delete('/image/{id}', [GalleryController::class, 'destroy'])->middleware('auth');
+Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum']);
