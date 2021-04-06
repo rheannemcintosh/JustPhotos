@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,7 @@ use App\Http\Controllers\GalleryController;
 |
 */
 
+Route::get('/', [FrontendController::class, 'index']);
 
 Auth::routes();
 
@@ -32,4 +34,4 @@ Route::get('/upload/images/{id}', [GalleryController::class, 'create'])->middlew
 Route::post('/uploadImage', [GalleryController::class, 'upload'])->middleware('auth');
 
 Route::delete('/image/{id}', [GalleryController::class, 'destroy'])->middleware('auth');
-Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum']);
+Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum'])->name('view.album');
