@@ -13,4 +13,10 @@ class FrontendController extends Controller
 
         return view('home', compact('albums'));
     }
+
+    public function userAlbum ($id)
+    {
+        $albums = Album::where('user_id', $id)->get();
+        return view('user-album', compact('albums'));
+    }
 }
