@@ -5,6 +5,10 @@
     
     <img src="{{ asset('banner') }}/banner.jpg" style="width: 100%;">
 
+    @if(auth()->user()->id != $userId)
+        <follower user-id="{{ $userId }}" follows="{{ $follows }}"></follower>
+    @endif
+
     <div class="row">
         @foreach($albums as $album)
             <div class="col-lg-3">
