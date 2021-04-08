@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\FollowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::get('user/profile/{id}', [FrontendController::class, 'userAlbum'])->name(
 Route::get('/albums/create', [AlbumController::class, 'create'])->name('album.create')->middleware('auth');
 Route::post('/albums/store', [AlbumController::class, 'store'])->middleware('auth');
 
+Route::post('/follow', [FollowerController::class, 'follow']);
 Route::get('/albums', [AlbumController::class, 'index'])->middleware('auth');
 Route::get('/getalbums', [AlbumController::class, 'getAlbums'])->middleware('auth');
 Route::get('/getimages', [GalleryController::class, 'images'])->middleware('auth');
