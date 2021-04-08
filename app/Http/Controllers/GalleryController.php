@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Image;
 use App\Models\Album;
+use App\Models\User;
 
 class GalleryController extends Controller
 {
@@ -54,6 +55,9 @@ class GalleryController extends Controller
     {
         $albums = Album::with('albumImages')->where('slug', $slug)->where('id', $id)->get();
         
-        return view('album.show', compact('albums'));
+        $userId = Album::where('id', $id)->first()->user_id;
+        $follows = (new User)->amIFollowing($userId);
+
+        return view('album.show', compact('albums', 'follows', 'userId'));
     }
 }
