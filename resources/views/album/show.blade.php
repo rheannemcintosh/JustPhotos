@@ -20,7 +20,7 @@
     <div class="col-md-12">
         <div class="card-body">
             @foreach($albums as $album)
-                @if(auth()->user()->id != $userId)
+                @if(Auth::check()&&auth()->user()->id != $userId)
                     <follower user-id="{{ $userId }}" follows="{{ $follows }}"></follower>
                 @endif
                 <p>Created By: 

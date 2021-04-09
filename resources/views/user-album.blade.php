@@ -8,7 +8,7 @@
         <img src="{{ asset('banner')}}/banner.jpg" style="width: 100%;">
     @endif
 
-    @if(auth()->user()->id != $userId)
+    @if(Auth::check()&&auth()->user()->id != $userId)
         <follower user-id="{{ $userId }}" follows="{{ $follows }}"></follower>
     @endif
 
