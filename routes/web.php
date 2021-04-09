@@ -27,6 +27,7 @@ Route::get('/albums/create', [AlbumController::class, 'create'])->name('album.cr
 Route::post('/albums/store', [AlbumController::class, 'store'])->middleware('auth');
 
 Route::post('/follow', [FollowerController::class, 'follow']);
+Route::get('/profile', [FollowerController::Class, 'profile']->name('profile');
 Route::get('/albums', [AlbumController::class, 'index'])->middleware('auth');
 Route::get('/getalbums', [AlbumController::class, 'getAlbums'])->middleware('auth');
 Route::get('/getimages', [GalleryController::class, 'images'])->middleware('auth');

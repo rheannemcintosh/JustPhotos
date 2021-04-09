@@ -55,9 +55,11 @@ class GalleryController extends Controller
     {
         $albums = Album::with('albumImages')->where('slug', $slug)->where('id', $id)->get();
         
-        $userId = Album::where('id', $id)->first()->user_id;
-        $follows = (new User)->amIFollowing($userId);
-
+        if(\Auth::check()) {
+            $userId = Album::where('id', $id)->first()->user_id;
+            $follows = (new User)->amIFollowing($userId);
+        }
+        
         return view('album.show', compact('albums', 'follows', 'userId'));
     }
 }

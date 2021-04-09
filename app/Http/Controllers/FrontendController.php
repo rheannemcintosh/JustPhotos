@@ -18,9 +18,10 @@ class FrontendController extends Controller
     public function userAlbum ($id)
     {
         $albums = Album::where('user_id', $id)->get();
-        $userId = $id;
-        $follows = (new User)->amIFollowing($userId);
-
+        if(\Auth::check()) {
+            $userId = $id;
+            $follows = (new User)->amIFollowing($userId);
+        }
         return view('user-album', compact('albums', 'userId', 'follows'));
     }
 }
