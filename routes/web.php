@@ -29,6 +29,9 @@ Route::post('/albums/store', [AlbumController::class, 'store'])->middleware('aut
 Route::post('/follow', [FollowerController::class, 'follow']);
 Route::get('/profile', [FollowerController::class, 'profile'])->name('profile');
 
+Route::get('/user/{id}', [FollowerController::class, 'getUserAvatar']);
+Route::post('/profile-pic', [FollowerController::class, 'updateUserAvatar']);
+
 Route::get('/albums', [AlbumController::class, 'index'])->middleware('auth');
 Route::get('/getalbums', [AlbumController::class, 'getAlbums'])->middleware('auth');
 Route::get('/getimages', [GalleryController::class, 'images'])->middleware('auth');
