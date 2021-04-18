@@ -40,7 +40,7 @@
                             @endforeach
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="references">
-                          
+                            <avatar userid="{{auth()->user()->id}}"></avatar>
                         </div>
                       </div>
                     
