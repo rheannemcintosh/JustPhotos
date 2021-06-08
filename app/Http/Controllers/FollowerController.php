@@ -32,6 +32,11 @@ class FollowerController extends Controller
         return $user->profilePic;
     }
 
+    public function getBgPic ($id) {
+        $user = User::find($id);
+        return $user->profile_banner;
+    }
+
     public function updateUserAvatar (Request $request) {
         $this->validate($request, [
             'image' => 'required|mimes:jpeg,jpg,png'
@@ -41,6 +46,20 @@ class FollowerController extends Controller
         $authUser = auth()->user()->id;
         $user = User::where('id', $authUser)
             ->update(['profilePic' => $image]);
+
+        return redirect()->back();
+
+    }
+
+    public function updateBgPic (Request $request) {
+        $this->validate($request, [
+            'image' => 'required|mimes:jpeg,jpg,png'
+        ]);
+
+        $image = $request->image->store('public/avatar');
+        $authUser = auth()->user()->id;
+        $user = User::where('id', $authUser)
+            ->update(['profile_banner' => $image]);
 
         return redirect()->back();
 

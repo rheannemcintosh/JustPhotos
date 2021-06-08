@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     @if(Auth::check()&&auth()->user()->bgpic)
-        <img src="{{ Storage::url(auth()->user()->bgpic) }}" style="width: 100%;">
+        <img src="{{ Storage::url($userBgPic) }}" style="width: 100%;">
     @else
         <img src="{{ asset('banner')}}/banner.jpg" style="width: 100%;">
     @endif

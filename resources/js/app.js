@@ -26,6 +26,7 @@ Vue.component('edit', require('./components/EditComponent.vue').default);
 Vue.component('upload', require('./components/UploadComponent.vue').default);
 Vue.component('follower', require('./components/FollowerComponent.vue').default);
 Vue.component('avatar', require('./components/AvatarComponent.vue').default);
+Vue.component('background', require('./components/BackgroundComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

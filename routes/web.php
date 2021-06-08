@@ -26,11 +26,13 @@ Route::get('user/profile/{id}', [FrontendController::class, 'userAlbum'])->name(
 Route::get('/albums/create', [AlbumController::class, 'create'])->name('album.create')->middleware('auth');
 Route::post('/albums/store', [AlbumController::class, 'store'])->middleware('auth');
 
-Route::post('/follow', [FollowerController::class, 'follow']);
-Route::get('/profile', [FollowerController::class, 'profile'])->name('profile');
+Route::post('/follow', [FollowerController::class, 'follow'])->middleware('auth');
+Route::get('/profile', [FollowerController::class, 'profile'])->name('profile')->middleware('auth');
 
-Route::get('/user/{id}', [FollowerController::class, 'getUserAvatar']);
-Route::post('/profile-pic', [FollowerController::class, 'updateUserAvatar']);
+Route::get('/user/{id}', [FollowerController::class, 'getUserAvatar'])->middleware('auth');
+Route::get('/user/banner/{id}', [FollowerController::class, 'getBgPic'])->middleware('auth');
+Route::post('/profile-pic', [FollowerController::class, 'updateUserAvatar'])->middleware('auth');
+Route::post('/bg-pic', [FollowerController::class, 'updateBgPic'])->middleware('auth');
 
 Route::get('/albums', [AlbumController::class, 'index'])->middleware('auth');
 Route::get('/getalbums', [AlbumController::class, 'getAlbums'])->middleware('auth');
